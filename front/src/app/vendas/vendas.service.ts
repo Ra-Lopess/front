@@ -23,4 +23,8 @@ export class VendasService {
     return this.http.get<any>(`${this.api}/produtos`);
   }
 
+  listarItens(): Observable<any>{
+    return this.http.get<any>(`${this.api}/itens`);
+  }
+
 }

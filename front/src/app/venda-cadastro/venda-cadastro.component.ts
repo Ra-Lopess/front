@@ -13,6 +13,7 @@ export class VendaCadastroComponent implements OnInit {
   item: any = {};
   clientes!: Array<any>; 
   produtos!: Array<any>;
+  itens!: Array<any>;
 
   constructor(private vendaServide: VendasService) { }
 
@@ -20,6 +21,8 @@ export class VendaCadastroComponent implements OnInit {
     this.vendaServide.listarClientes().subscribe(response => this.clientes = response);
 
     this.vendaServide.listarProdutos().subscribe(response => this.produtos = response);
+
+    this.vendaServide.listarItens().subscribe(response => this.produtos = response);
   }
 
   incluirItem(){

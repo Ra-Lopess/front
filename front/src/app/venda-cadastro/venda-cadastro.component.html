@@ -68,6 +68,31 @@
                     
                     
                 </div>
+
+                <div>
+                    <table class="table table-bordered mt-4">
+
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Produto</th>
+                                <th scope="col">Valor unitário</th>
+                                <th scope="col">Quantidade</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody *ngFor="let item of itens">
+                            <tr>
+                                <td>{{ item.produto.nome }}</td>
+                                <td>{{ item.produto.valor | number: '1.2-2' }}</td>
+                                <td>{{ item.quantidade }}</td>
+                                <td>{{ item.total }}</td>
+                            </tr>
+                        </tbody>
+            
+
+                    </table>
+                </div>
                 
 
             </div>
