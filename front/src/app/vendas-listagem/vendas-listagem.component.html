@@ -14,8 +14,8 @@
             <tbody *ngFor="let venda of vendas">
                 <tr>
                     <th scope="row">{{ venda.id }}</th>
-                    <td>{{ venda.cliente.nome }}</td>
-                    <td class="col-data">{{ venda.cadastro | date:'dd/MM/yyyy' }}</td>
+                    <td>{{ venda.idCliente }}</td> <!--mudar para venda.cliente.nome-->
+                    <td class="col-data">{{ venda.dataCadastro | date:'dd/MM/yyyy' }}</td>
                     <td class="col-numero">{{ venda.total | number: '1.2-2' }}</td>
                 </tr>
             </tbody>
