@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 
 import { VendasService } from '../vendas/vendas.service';
 
@@ -9,20 +10,22 @@ import { VendasService } from '../vendas/vendas.service';
 })
 export class VendaCadastroComponent implements OnInit {
 
-  venda = {};
+  vendas!: Array<any>;
   item: any = {};
   clientes!: Array<any>; 
   produtos!: Array<any>;
   itens!: Array<any>;
 
-  constructor(private vendaServide: VendasService) { }
+  constructor(private VendasService: VendasService) { }
 
   ngOnInit(): void {
-    this.vendaServide.listarClientes().subscribe(response => this.clientes = response);
+    this.VendasService.listarClientes().subscribe(response => this.clientes = response);
 
-    this.vendaServide.listarProdutos().subscribe(response => this.produtos = response);
+    this.VendasService.listarProdutos().subscribe(response => this.produtos = response);
 
-    this.vendaServide.listarItens().subscribe(response => this.produtos = response);
+    this.VendasService.listarItens().subscribe(response => this.itens = response);
+
+    this.VendasService.listar().subscribe(response => this.vendas = response);
   }
 
   incluirItem(){
@@ -32,5 +35,6 @@ export class VendaCadastroComponent implements OnInit {
 
     this.item = {};
   }
+  
 
 }

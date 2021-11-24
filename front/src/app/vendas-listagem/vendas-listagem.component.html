@@ -1,6 +1,13 @@
+<div class="fundorosa mb-4">
+    <hr class="mt-4 mb-2 ">
+    <div class="container">
+        <h2 class="pb-2">Vendas</h2>
+    </div>
+</div>
 <div class="container">
+
     <div class="col-12">
-        <table class="table table-bordered mt-4">
+        <table class="table table-hover table-bordered mt-4">
 
             <thead class="thead-dark">
                 <tr>
@@ -14,7 +21,7 @@
             <tbody *ngFor="let venda of vendas">
                 <tr>
                     <th scope="row">{{ venda.id }}</th>
-                    <td>{{ venda.idCliente }}</td> <!--mudar para venda.cliente.nome-->
+                    <td>{{ venda.cliente.nome }}</td> <!--mudar para venda.cliente.nome-->
                     <td class="col-data">{{ venda.dataCadastro | date:'dd/MM/yyyy' }}</td>
                     <td class="col-numero">{{ venda.total | number: '1.2-2' }}</td>
                 </tr>
