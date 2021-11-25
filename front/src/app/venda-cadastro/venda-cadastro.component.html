@@ -14,15 +14,11 @@
             <div class="mb-3 col-8">
                 <h5 class="form-label ">Cliente</h5>
 
-                <div class="dropdown d-grid" variant="outline-danger">
-                    <button class="btn text-center dropdown-toggle btn-outline-dark" type="button"
-                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Selecione...
-                    </button>
-                    <ul class="dropdown-menu text-start" aria-labelledby="dropdownMenuButton1">
-                        <li *ngFor="let cliente of clientes"><a class="dropdown-item" href="#">{{ cliente.nome }}</a>
-                        </li>
-                    </ul>
+                <div class="input-group mb-3">
+                    <select class="form-select" id="inputGroupSelect01">
+                        <option selected>Selecione...</option>
+                        <option *ngFor="let cliente of clientes">{{ cliente.nome }}</option>
+                    </select>
                 </div>
 
 
@@ -54,17 +50,14 @@
 
                 <div class="row">
 
+                    
+
                     <div class="col-8">
-                        <div class="dropdown d-grid" variant="outline-danger">
-                            <button class="btn text-center dropdown-toggle btn-outline-dark" type="button"
-                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Selecione...
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li *ngFor="let produto of produtos"><a class="dropdown-item" href="#">{{ produto.nome
-                                        }}</a>
-                                </li>
-                            </ul>
+                        <div class="input-group mb-3 col-8">
+                            <select class="form-select" id="inputGroupSelect01">
+                                <option selected>Selecione...</option>
+                                <option *ngFor="let produto of produtos">{{ produto.nome }}</option>
+                            </select>
                         </div>
 
                     </div>
@@ -85,6 +78,7 @@
 
                         <thead class="thead-dark">
                             <tr class="table-secondary">
+                                <th scope="col">#</th>
                                 <th scope="col">Produto</th>
                                 <th scope="col">Valor unitário</th>
                                 <th scope="col">Quantidade</th>
@@ -92,12 +86,13 @@
                             </tr>
                         </thead>
 
-                        <tbody *ngFor="let item of itens">
+                        <tbody *ngFor="let venda of vendas">
                             <tr>
-                                <th>{{ item.produto.nome }}</th>
-                                <td class="col-numero">{{ item.produto.valor | number: '1.2-2' }}</td>
-                                <td>{{ item.quantidade }}</td>
-                                <td class="col-numero">{{ item.venda.total }}</td>
+                                <th>{{ venda.itens.produto.id }}</th>
+                                <th>{{ venda.itens.produto.nome }}</th>
+                                <td class="col-numero">{{ venda.itens.produto.valor | number: '1.2-2' }}</td>
+                                <td>{{ venda.itens.quantidade }}</td>
+                                <td class="col-numero">{{ venda.total | number: '1.2-2' }}</td>
                             </tr>
                         </tbody>
 
@@ -122,7 +117,7 @@
                         <div class="input-group">
 
                             <span class="input-group-text rosa">R$</span>
-                            <input type="" class="form-control rosa" id="" readonly>
+                            <input  type="" class="form-control rosa" id="" readonly>
                         </div>
                     </div>
                 </div>

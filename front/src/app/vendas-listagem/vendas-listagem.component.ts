@@ -9,7 +9,7 @@ import { VendasService } from '../vendas/vendas.service';
 })
 export class VendasListagemComponent implements OnInit {
 
-  vendas!: Array<any>;
+  vendas: Array<any> = [];
 
   constructor(private vendaService: VendasService) { }
 

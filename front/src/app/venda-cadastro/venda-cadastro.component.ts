@@ -10,22 +10,24 @@ import { VendasService } from '../vendas/vendas.service';
 })
 export class VendaCadastroComponent implements OnInit {
 
-  vendas!: Array<any>;
+  //vendas: any = { itens: [] }
   item: any = {};
-  clientes!: Array<any>; 
-  produtos!: Array<any>;
-  itens!: Array<any>;
+  clientes: Array<any> = []; 
+  produtos: Array<any> = [];
+  vendas: Array<any> = [];
 
   constructor(private VendasService: VendasService) { }
 
   ngOnInit(): void {
-    this.VendasService.listarClientes().subscribe(response => this.clientes = response);
+    this.VendasService.listarClientes()
+      .subscribe(response => this.clientes = response);
 
-    this.VendasService.listarProdutos().subscribe(response => this.produtos = response);
+    this.VendasService.listarProdutos()
+      .subscribe(response => this.produtos = response);
 
-    this.VendasService.listarItens().subscribe(response => this.itens = response);
+    // this.VendasService.listar()
+    //   .subscribe(response => [console.log(response)]);
 
-    this.VendasService.listar().subscribe(response => this.vendas = response);
   }
 
   incluirItem(){
