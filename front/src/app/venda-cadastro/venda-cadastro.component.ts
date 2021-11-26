@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Item } from '../itens/shared/item';
 
 import { VendasService } from '../vendas/vendas.service';
 
@@ -10,11 +11,13 @@ import { VendasService } from '../vendas/vendas.service';
 })
 export class VendaCadastroComponent implements OnInit {
 
-  //vendas: any = { itens: [] }
+  formItem!: FormGroup;
+
+  venda: any = { itens: [] }
   item: any = {};
   clientes: Array<any> = []; 
   produtos: Array<any> = [];
-  vendas: Array<any> = [];
+  //vendas: Array<any> = [];
 
   constructor(private VendasService: VendasService) { }
 
@@ -25,18 +28,25 @@ export class VendaCadastroComponent implements OnInit {
     this.VendasService.listarProdutos()
       .subscribe(response => this.produtos = response);
 
-    // this.VendasService.listar()
-    //   .subscribe(response => [console.log(response)]);
+    this.createItens(new Item());
 
   }
 
-  incluirItem(){
-    this.item.total = (this.item.produto.valor * this.item.quantidade);
-
-    this.item.push(this.item);
-
-    this.item = {};
+  createItens(item: Item){
+    this.formItem = new FormGroup({
+      produto: new FormControl(item.produto),
+      quantidade: new FormControl(item.quantidade)
+    })
   }
   
-
+  incluirItem(){
+    //this.item.total = (this.item.produto.produto.valor * this.formItem.value.quantidade);
+    this.formItem.value.total = (this.formItem.value.produto.produto.valor * this.formItem.value.quantidade);;
+    
+    this.venda.itens.push(this.formItem.value);
+  
+    this.formItem.reset(new Item());
+  
+  }
+  
 }

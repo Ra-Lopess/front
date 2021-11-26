@@ -27,4 +27,8 @@ export class VendasService {
     return this.http.get<any>(`${this.api}/itens`);
   }
 
+  produtoById():Observable<any>{
+    return this.http.get<any>(`${this.api}/produtos`)
+  }
+
 }

@@ -15,7 +15,7 @@
                 <h5 class="form-label ">Cliente</h5>
 
                 <div class="input-group mb-3">
-                    <select class="form-select" id="inputGroupSelect01">
+                    <select class="form-select" id="inputGroupSelect01" placeholder="selecione">
                         <option selected>Selecione...</option>
                         <option *ngFor="let cliente of clientes">{{ cliente.nome }}</option>
                     </select>
@@ -48,29 +48,34 @@
                     <h5 class="card-title col-3">Quantidade</h5>
                 </div>
 
-                <div class="row">
 
-                    
+                <form [formGroup]="formItem" (ngSubmit)="incluirItem()">
 
-                    <div class="col-8">
-                        <div class="input-group mb-3 col-8">
-                            <select class="form-select" id="inputGroupSelect01">
-                                <option selected>Selecione...</option>
-                                <option *ngFor="let produto of produtos">{{ produto.nome }}</option>
-                            </select>
+                    <div class="row">
+
+                        <div class="col-8">
+                            <div class="input-group mb-3 col-8 form-group">
+                                <select class="form-select" id="inputGroupSelect01" formControlName="produto">
+                                    <option selected>Selecione...</option>
+                                    <option class="form-control" *ngFor="let produto of produtos" [ngValue]="{produto}" >{{ produto.nome }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-3 form-group">
+                            <input type="number" ng-model="item.quantidade" formControlName="quantidade" id="">
+                        </div>
+
+                        <div class="mb-3 col-1 d-grid">
+                            <button type="sumbit" class="btn btn-outline-dark " [disabled]="">+</button>
                         </div>
 
                     </div>
 
-                    <div class="mb-3 col-3">
-                        <input type="number" class="form-control" id="">
-                    </div>
+                </form>
 
-                    <div class="mb-3 col-1 d-grid">
-                        <button type="button" class="btn btn-outline-dark " (click)="incluirItem()">+</button>
-                    </div>
 
-                </div>
 
                 <div class="">
                     <h5 class="">Itens</h5>
@@ -86,13 +91,13 @@
                             </tr>
                         </thead>
 
-                        <tbody *ngFor="let venda of vendas">
+                        <tbody *ngFor="let item of venda.itens">
                             <tr>
-                                <th>{{ venda.itens.produto.id }}</th>
-                                <th>{{ venda.itens.produto.nome }}</th>
-                                <td class="col-numero">{{ venda.itens.produto.valor | number: '1.2-2' }}</td>
-                                <td>{{ venda.itens.quantidade }}</td>
-                                <td class="col-numero">{{ venda.total | number: '1.2-2' }}</td>
+                                <th>{{ item.produto.produto.id }}</th>
+                                <th>{{ item.produto.produto.nome }}</th>
+                                <td class="col-numero">{{ item.produto.produto.valor | number: '1.2-2' }}</td>
+                                <td>{{ item.quantidade }}</td>
+                                <td class="col-numero">{{ item.total | number: '1.2-2' }}</td>
                             </tr>
                         </tbody>
 
@@ -117,7 +122,7 @@
                         <div class="input-group">
 
                             <span class="input-group-text rosa">R$</span>
-                            <input  type="" class="form-control rosa" id="" readonly>
+                            <input type="" class="form-control rosa" id="" readonly>
                         </div>
                     </div>
                 </div>
