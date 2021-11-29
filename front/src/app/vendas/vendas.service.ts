@@ -31,4 +31,8 @@ export class VendasService {
     return this.http.get<any>(`${this.api}/produtos`)
   }
 
+  cadastroVenda(venda: any): Observable<any>{
+    return this.http.post<any>(`${this.api}/vendas/cadastroVenda`, venda);
+  }
+
 }

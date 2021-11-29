@@ -9,127 +9,139 @@
 
     <form>
 
-        <div class="row">
+        <form [formGroup]="formVenda" #frm="ngForm" (ngSubmit)="incluirVenda(frm)">
 
-            <div class="mb-3 col-8">
-                <h5 class="form-label ">Cliente</h5>
+            <div class="row">
 
-                <div class="input-group mb-3">
-                    <select class="form-select" id="inputGroupSelect01" placeholder="selecione">
-                        <option selected>Selecione...</option>
-                        <option *ngFor="let cliente of clientes">{{ cliente.nome }}</option>
-                    </select>
+                <div class="mb-3 col-8">
+                    <h5 class="form-label ">Cliente</h5>
+
+                    <div class="input-group mb-3">
+                        <select class="form-select" id="inputGroupSelect01" placeholder="selecione"
+                            formControlName="idCliente">
+                            <option selected>Selecione...</option>
+                            <option *ngFor="let cliente of clientes" [ngValue]="cliente.id">{{ cliente.nome }}</option>
+                        </select>
+                    </div>
+
+
                 </div>
 
 
-            </div>
-
-
-            <div class="mb-3 col-4">
-                <h5 for="" class="form-label">Frete</h5>
-                <div class="input-group">
-                    <span class="input-group-text">R$</span>
-                    <input type="text" class="form-control col-numero"
-                        aria-label="Dollar amount (with dot and two decimal places)">
-                    <span class="input-group-text">,00</span>
+                <div class="mb-3 col-4">
+                    <h5 for="" class="form-label">Frete</h5>
+                    <div class="input-group">
+                        <span class="input-group-text">R$</span>
+                        <input type="number" class="form-control col-numero"
+                            aria-label="Dollar amount (with dot and two decimal places)" formControlName="frete" (change) = "calcularTotal()">
+                        <span class="input-group-text">,00</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
 
-        <div class="card ">
-            <div class="card-header">
-                <h4 class="mb-0">Itens</h4>
-            </div>
-            <div class="card-body">
 
-                <div class="row">
-                    <h5 class="card-title col-8">Produtos</h5>
-                    <h5 class="card-title col-3">Quantidade</h5>
+            <div class="card ">
+                <div class="card-header">
+                    <h4 class="mb-0">Itens</h4>
                 </div>
-
-
-                <form [formGroup]="formItem" (ngSubmit)="incluirItem()">
+                <div class="card-body">
 
                     <div class="row">
+                        <h5 class="card-title col-8">Produtos</h5>
+                        <h5 class="card-title col-3">Quantidade</h5>
+                    </div>
 
-                        <div class="col-8">
-                            <div class="input-group mb-3 col-8 form-group">
-                                <select class="form-select" id="inputGroupSelect01" formControlName="produto">
-                                    <option selected>Selecione...</option>
-                                    <option class="form-control" *ngFor="let produto of produtos" [ngValue]="{produto}" >{{ produto.nome }}
-                                    </option>
-                                </select>
+
+                    <form [formGroup]="formItem" (ngSubmit)="incluirItem()" #itemForm="ngForm">
+
+                        <div class="row">
+
+                            <div class="col-8">
+                                <div class="input-group mb-3 col-8 form-group">
+                                    <select class="form-select" id="inputGroupSelect01" formControlName="produto">
+                                        <option selected>Selecione...</option>
+                                        <option class="form-control" *ngFor="let produto of produtos"
+                                            [ngValue]="produto">
+                                            {{ produto.nome }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 col-3 form-group">
+                                <input type="number" class="form-control col-numero" 
+                                    ng-model="item.quantidade" formControlName="quantidade" id="" min="1" >
+                            </div>
+
+                            <div class="mb-3 col-1 d-grid">
+                                <button type="sumbit" class="btn btn-outline-dark " [disabled]="itemForm.invalid">+</button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+
+
+                    <div class="">
+                        <h5 class="">Itens</h5>
+                        <table class="table table-hover table-bordered mt-2 ">
+
+                            <thead class="thead-dark">
+                                <tr class="table-secondary">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Produto</th>
+                                    <th scope="col">Valor unitário</th>
+                                    <th scope="col">Quantidade</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+
+                            <tbody *ngFor="let item of itens">
+                                <tr>
+                                    <th>{{ item.produto.id }}</th>
+                                    <th>{{ item.produto.nome }}</th>
+                                    <td class="col-numero">{{ item.produto.valor | number: '1.2-2' }}</td>
+                                    <td>{{ item.quantidade }}</td>
+                                    <td class="col-numero">{{ item.total | number: '1.2-2' }}</td>
+                                </tr>
+                            </tbody>
+
+
+                        </table>
+                    </div>
+
+
+                </div>
+                <div class="card-footer bg-transparent border-dark rosa">
+                    <div class="row">
+                        <div class=" col-1 mt-2">
+                            <h5 class="fw-bold">Total</h5>
+
+                        </div>
+                        <div class="col-9 mt-1">
+                            <h5 class="rosa">
+                                <hr class="bolinha">
+                            </h5>
+                        </div>
+                        <div class=" col-2 mt-1">
+                            <div class="input-group">
+                                <span class="input-group-text rosa">R$</span>
+                                <span  type="number" class="input-group-text rosa col-numero">{{total | number:'1.2-2'}}</span>
                             </div>
                         </div>
-
-                        <div class="mb-3 col-3 form-group">
-                            <input type="number" ng-model="item.quantidade" formControlName="quantidade" id="">
-                        </div>
-
-                        <div class="mb-3 col-1 d-grid">
-                            <button type="sumbit" class="btn btn-outline-dark " [disabled]="">+</button>
-                        </div>
-
                     </div>
 
-                </form>
-
-
-
-                <div class="">
-                    <h5 class="">Itens</h5>
-                    <table class="table table-hover table-bordered mt-2 ">
-
-                        <thead class="thead-dark">
-                            <tr class="table-secondary">
-                                <th scope="col">#</th>
-                                <th scope="col">Produto</th>
-                                <th scope="col">Valor unitário</th>
-                                <th scope="col">Quantidade</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                        </thead>
-
-                        <tbody *ngFor="let item of venda.itens">
-                            <tr>
-                                <th>{{ item.produto.produto.id }}</th>
-                                <th>{{ item.produto.produto.nome }}</th>
-                                <td class="col-numero">{{ item.produto.produto.valor | number: '1.2-2' }}</td>
-                                <td>{{ item.quantidade }}</td>
-                                <td class="col-numero">{{ item.total | number: '1.2-2' }}</td>
-                            </tr>
-                        </tbody>
-
-
-                    </table>
-                </div>
-
-
-            </div>
-            <div class="card-footer bg-transparent border-dark rosa">
-                <div class="row">
-                    <div class=" col-1 mt-2">
-                        <h5 class="fw-bold">Total</h5>
-
-                    </div>
-                    <div class="col-9 mt-1">
-                        <h5 class="rosa">
-                            <hr class="bolinha">
-                        </h5>
-                    </div>
-                    <div class=" col-2 mt-1">
-                        <div class="input-group">
-
-                            <span class="input-group-text rosa">R$</span>
-                            <input type="" class="form-control rosa" id="" readonly>
-                        </div>
-                    </div>
                 </div>
 
             </div>
 
-        </div>
+            <div class="mt-4 d-grid">
+                <button type="sumbit" class="btn btn-outline-dark " [disabled]="frm.invalid || itemForm.invalid">Salvar venda</button>
+            </div>
+
+        </form>
 
 
     </form>

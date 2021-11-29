@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
 
-<app-venda-cadastro></app-venda-cadastro>
+<app-venda-cadastro (vendaSalva)="listagem.listar()"></app-venda-cadastro>
 
-<app-vendas-listagem></app-vendas-listagem>
+<app-vendas-listagem #listagem></app-vendas-listagem>
