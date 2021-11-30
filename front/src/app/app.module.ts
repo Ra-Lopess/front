@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VendasListagemComponent } from './vendas-listagem/vendas-listagem.component';
 import { VendaCadastroComponent } from './venda-cadastro/venda-cadastro.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 registerLocaleData(localePt);
 
@@ -26,6 +27,7 @@ registerLocaleData(localePt);
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
     
     AppRoutingModule
   ],

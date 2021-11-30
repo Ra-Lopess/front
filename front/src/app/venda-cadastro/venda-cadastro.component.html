@@ -1,7 +1,52 @@
 <div class="fundorosa mb-4">
     <hr class=" mb-2 mt-0">
     <div class="container">
-        <h2 class="pb-2">Cadastro Venda</h2>
+        <div class="row">
+            <h2 class="pb-2 col-8">Cadastro Venda</h2>
+
+            <div class="col-4  d-flex justify-content-end">
+                <!--<fa-icon icon="faInfoCircle"></fa-icon>-->
+                <a type="button" class="nav-link link-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Não consegue cadastrar uma <span class="rosa">Venda</span> ou <span class="rosa">Item</span>?
+                </a>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Informações</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Para cadastrar um <span class="rosa">Item</span>, na seção Itens:</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">O campo Produtos é <span
+                                            class="rosa">obrigatório</span>.</li>
+                                    <li class="list-group-item">O campo Quantidade é <span
+                                            class="rosa">obrigatório</span> e deve ser um número positivo maior que 1.
+                                    </li>
+                                </ul>
+                                <hr>
+                                <h5>Para cadastrar uma <span class="rosa">Venda</span>:</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">O campo Cliente é <span class="rosa">obrigatório</span>.
+                                    </li>
+                                    <li class="list-group-item">Deve-se ter pelo menos 1 item já cadastrado.</li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-dark"
+                                    data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </div>
 </div>
 
@@ -19,7 +64,7 @@
                     <div class="input-group mb-3">
                         <select class="form-select" id="inputGroupSelect01" placeholder="selecione"
                             formControlName="idCliente">
-                            <option selected>Selecione...</option>
+                            <option selected disabled>Selecione...</option>
                             <option *ngFor="let cliente of clientes" [ngValue]="cliente.id">{{ cliente.nome }}</option>
                         </select>
                     </div>
@@ -33,7 +78,8 @@
                     <div class="input-group">
                         <span class="input-group-text">R$</span>
                         <input type="number" class="form-control col-numero"
-                            aria-label="Dollar amount (with dot and two decimal places)" formControlName="frete" (change) = "calcularTotal()">
+                            aria-label="Dollar amount (with dot and two decimal places)" formControlName="frete"
+                            (change)="calcularTotal()" min="0">
                         <span class="input-group-text">,00</span>
                     </div>
                 </div>
@@ -55,12 +101,12 @@
 
                     <form [formGroup]="formItem" (ngSubmit)="incluirItem()" #itemForm="ngForm">
 
-                        <div class="row">
+                        <div class="row ">
 
                             <div class="col-8">
                                 <div class="input-group mb-3 col-8 form-group">
                                     <select class="form-select" id="inputGroupSelect01" formControlName="produto">
-                                        <option selected>Selecione...</option>
+                                        <option selected disabled>Selecione...</option>
                                         <option class="form-control" *ngFor="let produto of produtos"
                                             [ngValue]="produto">
                                             {{ produto.nome }}
@@ -70,19 +116,18 @@
                             </div>
 
                             <div class="mb-3 col-3 form-group">
-                                <input type="number" class="form-control col-numero" 
-                                    ng-model="item.quantidade" formControlName="quantidade" id="" min="1" >
+                                <input type="number" class="form-control col-numero" ng-model="item.quantidade"
+                                    formControlName="quantidade" id="" min="1">
                             </div>
 
                             <div class="mb-3 col-1 d-grid">
-                                <button type="sumbit" class="btn btn-outline-dark " [disabled]="itemForm.invalid">+</button>
+                                <button type="sumbit" class="btn btn-outline-dark "
+                                    [disabled]="itemForm.invalid">+</button>
                             </div>
 
                         </div>
 
                     </form>
-
-
 
                     <div class="">
                         <h5 class="">Itens</h5>
@@ -125,10 +170,11 @@
                                 <hr class="bolinha">
                             </h5>
                         </div>
-                        <div class=" col-2 mt-1">
-                            <div class="input-group">
+                        <div class=" col-2 mt-1 ">
+                            <div class="input-group d-flex justify-content-end">
                                 <span class="input-group-text rosa">R$</span>
-                                <span  type="number" class="input-group-text rosa col-numero">{{total | number:'1.2-2'}}</span>
+                                <span type="number" class="input-group-text rosa col-numero" min="0">{{total |
+                                    number:'1.2-2'}}</span>
                             </div>
                         </div>
                     </div>
@@ -138,7 +184,9 @@
             </div>
 
             <div class="mt-4 d-grid">
-                <button type="sumbit" class="btn btn-outline-dark " [disabled]="frm.invalid || itemForm.invalid">Salvar venda</button>
+                <button type="sumbit" class="btn btn-outline-dark " [disabled]="frm.invalid || checkTable()">Salvar
+                    venda</button>
+                <!--|| itemForm.invalid-->
             </div>
 
         </form>

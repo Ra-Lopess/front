@@ -22,6 +22,10 @@ export class VendaCadastroComponent implements OnInit {
   venda: any;
 
   total = 0;
+  submitted = false;
+
+  get fv() { return this.formVenda.controls; }
+  get vi() { return this.formItem.controls; }
 
   @Output() vendaSalva = new EventEmitter();
 
@@ -37,7 +41,7 @@ export class VendaCadastroComponent implements OnInit {
     this.VendasService.listarProdutos()
       .subscribe(response => this.produtos = response);
 
-    
+
 
     this.novaVenda();
 
@@ -46,20 +50,30 @@ export class VendaCadastroComponent implements OnInit {
   createItens() {
     this.formItem = this.formBuilder.group({
       produto: ['', Validators.required],
-      quantidade: ['', [Validators.required, Validators.min(1)]]
+      quantidade: ['', [Validators.required]]
     })
   }
 
 
   incluirItem() {
 
+    console.log(this.itemVenda)
+
     let { produto, quantidade } = this.formItem.value;
     let total = produto.valor * quantidade;
+
+    if (produto == null || produto < 0) {
+      produto = 0;
+    }
 
     let itensTable = {
       produto,
       quantidade,
       total
+    }
+
+    if (itensTable.quantidade < 1) {
+      console.log(itensTable.quantidade);
     }
 
     let itemAux = {
@@ -91,13 +105,20 @@ export class VendaCadastroComponent implements OnInit {
   }
 
   incluirVenda(frm: FormGroupDirective) {
+    this.submitted = true;
+
     let { idCliente, frete } = this.formVenda.value;
+
+    if (frete == null || frete < 1) {
+      frete = 0;
+    }
 
     let venda = {
       idCliente,
       frete,
       'itens': this.itemVenda
     }
+
 
 
     this.venda = venda;
@@ -119,6 +140,14 @@ export class VendaCadastroComponent implements OnInit {
       this.total += item.produto.valor * item.quantidade;
     })
   }
-  
+
+  checkTable() {
+    if (this.itemVenda.length == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
 }
