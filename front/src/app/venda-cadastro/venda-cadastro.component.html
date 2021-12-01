@@ -105,7 +105,7 @@
 
                             <div class="col-8">
                                 <div class="input-group mb-3 col-8 form-group">
-                                    <select class="form-select" id="inputGroupSelect01" formControlName="produto">
+                                    <select class="form-select" id="inputGroupSelect01" formControlName="produto" required>
                                         <option selected disabled>Selecione...</option>
                                         <option class="form-control" *ngFor="let produto of produtos"
                                             [ngValue]="produto">
@@ -113,16 +113,17 @@
                                         </option>
                                     </select>
                                 </div>
+                                <span *ngIf="!isValid && f.controls['produto'].errors">Adicione um produto</span>
                             </div>
 
                             <div class="mb-3 col-3 form-group">
                                 <input type="number" class="form-control col-numero" ng-model="item.quantidade"
                                     formControlName="quantidade" id="" min="1">
+                                <span *ngIf="!isValid && f.controls['quantidade'].errors">Adicione uma quantidade positiva</span>
                             </div>
 
                             <div class="mb-3 col-1 d-grid">
-                                <button type="sumbit" class="btn btn-outline-dark "
-                                    [disabled]="itemForm.invalid">+</button>
+                                <button type="sumbit" class="btn btn-outline-dark ">+</button>
                             </div>
 
                         </div>

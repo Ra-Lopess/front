@@ -21,6 +21,8 @@ export class VendaCadastroComponent implements OnInit {
   itemVenda: Array<any> = [];
   venda: any;
 
+  isValid: boolean = true;
+
   total = 0;
   submitted = false;
 
@@ -54,10 +56,21 @@ export class VendaCadastroComponent implements OnInit {
     })
   }
 
+  get f(){
+    return this.formItem;
+  }
+
 
   incluirItem() {
-
+    //console.log(this.formItem.controls['produto'].errors)
     console.log(this.itemVenda)
+
+    if (this.formItem.invalid){
+      this.isValid = false;
+      return;
+    }
+    
+    this.isValid = true;
 
     let { produto, quantidade } = this.formItem.value;
     let total = produto.valor * quantidade;
